@@ -539,13 +539,17 @@ const char INDEX_HTML[] PROGMEM = R"EPAPERHTML(
       };
 
       // Ordered Bayer matrix of the given power-of-two size, scaled to 0..255.
+      // Bits go least significant first: that is the canonical construction.
+      // Walking them the other way also yields a plausible-looking matrix, but
+      // it drops every low threshold of the tile into one quadrant and the
+      // image dithers in visible blocks instead of an even grid.
       function makeBayer(size) {
         const bits = Math.log2(size);
         const matrix = new Float32Array(size * size);
         for (let y = 0; y < size; y++) {
           for (let x = 0; x < size; x++) {
             let value = 0;
-            for (let bit = bits - 1; bit >= 0; bit--) {
+            for (let bit = 0; bit < bits; bit++) {
               const xc = (x >> bit) & 1;
               const yc = (y >> bit) & 1;
               value = (value << 2) | ((xc ^ yc) << 1) | yc;

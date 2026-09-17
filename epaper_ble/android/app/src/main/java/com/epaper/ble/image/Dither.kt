@@ -72,8 +72,10 @@ object Dither {
     )
 
     /**
-     * Ordered Bayer matrix, least significant bit first. Reversing the bit order
-     * clusters the low thresholds into one quadrant and dithers in blocks.
+     * Ordered Bayer matrix, least significant bit first: the canonical
+     * construction. Walking the bits the other way also yields a
+     * plausible-looking matrix, but it drops every low threshold of the tile
+     * into one quadrant and dithers in visible blocks. DitherTest guards this.
      */
     internal fun makeBayer(size: Int): FloatArray {
         val bits = Integer.numberOfTrailingZeros(size)

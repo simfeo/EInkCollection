@@ -490,5 +490,5 @@ void loop()
     displayBusy = false;
   }
 
-  delay(2);
+  delay(50);
 }

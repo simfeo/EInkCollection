@@ -73,9 +73,10 @@ enum Dither {
         .bayer2: 2, .bayer4: 4, .bayer8: 8
     ]
 
-    /// Ordered Bayer matrix, least significant bit first. Reversing the bit
-    /// order clusters the low thresholds into one quadrant, which dithers in
-    /// visible blocks instead of an even grid.
+    /// Ordered Bayer matrix, least significant bit first: the canonical
+    /// construction. Walking the bits the other way also yields a
+    /// plausible-looking matrix, but it drops every low threshold of the tile
+    /// into one quadrant and dithers in visible blocks instead of an even grid.
     static func makeBayer(_ size: Int) -> [Float] {
         let bits = Int(log2(Double(size)))
         var matrix = [Float](repeating: 0, count: size * size)
