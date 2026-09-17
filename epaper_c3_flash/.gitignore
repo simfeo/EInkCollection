@@ -1,0 +1,4 @@
+.build/
+.build-cache/
+flash.log
+__pycache__/
